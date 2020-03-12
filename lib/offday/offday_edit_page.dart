@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haazireevareeju/offday/offday_type.dart';
-import 'package:haazireevareeju/shift/shift_type.dart';
 import 'package:provider/provider.dart';
-
-import 'package:haazireevareeju/provider_model.dart';
 
 class OffDaysEditPage extends StatefulWidget {
   final OffDayType offDayType;
@@ -38,7 +35,8 @@ class _OffDaysEditPageState extends State<OffDaysEditPage> {
       appBar: AppBar(
         title: Text('Edit Shift Type'),
       ),
-      body: Column(
+      body: ListView(
+        padding: EdgeInsets.all(10),
         children: <Widget>[
           TextField(
             controller: offDayTypeId,
@@ -48,11 +46,13 @@ class _OffDaysEditPageState extends State<OffDaysEditPage> {
             controller: name,
             decoration: InputDecoration(labelText: 'Name'),
           ),
-          Switch(
+          CheckboxListTile(
+            title: Text('Paid'),
             value: paid,
             onChanged: (value) => setState(() => paid = value),
           ),
-          Switch(
+          CheckboxListTile(
+            title: Text('Active'),
             value: active,
             onChanged: (value) => setState(() => active = value),
           ),
@@ -63,7 +63,7 @@ class _OffDaysEditPageState extends State<OffDaysEditPage> {
                 widget.offDayType.name = name.text;
                 widget.offDayType.paid = paid;
                 widget.offDayType.active = active;
-              } else {
+              } else
                 Provider.of<OffDayTypeProvider>(context, listen: false)
                     .offDayTypes
                     .add(
@@ -74,9 +74,6 @@ class _OffDaysEditPageState extends State<OffDaysEditPage> {
                         paid: active,
                       ),
                     );
-              }
-              Provider.of<ShiftTypeProvider>(context, listen: false)
-                  .notifyListeners();
               Navigator.of(context).pop();
             },
             child: Text('Save'),
