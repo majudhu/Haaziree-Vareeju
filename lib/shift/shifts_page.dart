@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/shift/shift_edit_page.dart';
-import 'package:haazireevareeju/shift/shift_type.dart';
 import 'package:provider/provider.dart';
+
+import 'shift_edit_page.dart';
+import 'shift_type.dart';
 
 class ShiftsPage extends StatelessWidget {
   @override

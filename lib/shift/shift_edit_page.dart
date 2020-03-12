@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/shift/shift_type.dart';
 import 'package:provider/provider.dart';
+
+import 'shift_type.dart';
 
 class ShiftEditPage extends StatefulWidget {
   final ShiftType shift;
