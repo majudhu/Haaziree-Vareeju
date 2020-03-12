@@ -34,7 +34,7 @@ class _OffDaysEditPageState extends State<OffDaysEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Shift Type'),
+        title: Text('Edit Off Day Type'),
       ),
       body: ListView(
         padding: EdgeInsets.all(10),

@@ -34,7 +34,7 @@ class _BreakTypeEditPageState extends State<BreakTypeEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Shift Type'),
+        title: Text('Edit Break Type'),
       ),
       body: ListView(
         padding: EdgeInsets.all(10),

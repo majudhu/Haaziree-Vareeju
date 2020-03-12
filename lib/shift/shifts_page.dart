@@ -28,8 +28,8 @@ class ShiftsPage extends StatelessWidget {
                       decoration:
                           shift.active ? null : TextDecoration.lineThrough),
                 ),
-                subtitle: Text(shift.start.toString()),
-                trailing: Text(shift.duration.toString()),
+                subtitle: Text(shift.start.toString().substring(0, 7)),
+                trailing: Text(shift.duration.toString().substring(0, 5)),
               );
             },
           );

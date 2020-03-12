@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'break_type.dart';
-import 'breaktype_edit_page.dart';
+import 'holiday.dart';
+import 'holidays_edit_page.dart';
 
-class BreakTypesPage extends StatelessWidget {
+class HolidaysPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Break Types List'),
+        title: Text('Holidays List'),
       ),
-      body: Consumer<BreakTypesProvider>(
-        builder: (context, breakTypes, child) {
+      body: Consumer<HolidaysProvider>(
+        builder: (context, holidays, child) {
           return ListView.builder(
-            itemCount: breakTypes.breakTypes.length,
+            itemCount: holidays.holidays.length,
             itemBuilder: (context, index) {
-              final breakType = breakTypes.breakTypes[index];
+              final holiday = holidays.holidays[index];
               return ListTile(
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => BreakTypeEditPage(breakType),
+                    builder: (context) => HolidaysEditPage(holiday),
                   ),
                 ),
-                title: Text(breakType.name),
-                subtitle: Text(breakType.paid ? 'Paid' : 'Unpaid'),
-                trailing: Text(breakType.active ? 'Active' : 'Inactive'),
+                title: Text(holiday.name),
+                subtitle: Text(holiday.date.toString().substring(0, 10)),
+                trailing: Text(holiday.active ? 'active' : 'inactive'),
               );
             },
           );
@@ -35,7 +35,7 @@ class BreakTypesPage extends StatelessWidget {
         child: Icon(Icons.add),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => BreakTypeEditPage(),
+            builder: (context) => HolidaysEditPage(),
           ),
         ),
       ),

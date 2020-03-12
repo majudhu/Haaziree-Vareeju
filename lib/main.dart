@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haazireevareeju/break/break_type.dart';
+import 'package:haazireevareeju/holidays/holiday.dart';
 import 'package:haazireevareeju/home.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<BreakTypesProvider>(
           create: (context) => BreakTypesProvider(),
+        ),
+        ChangeNotifierProvider<HolidaysProvider>(
+          create: (context) => HolidaysProvider(),
         ),
       ],
       child: MaterialApp(

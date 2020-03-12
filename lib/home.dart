@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haazireevareeju/holidays/holidays_page.dart';
 
 import 'offday/offdays_page.dart';
 import 'shift/shifts_page.dart';
@@ -41,7 +42,11 @@ class HomePage extends StatelessWidget {
             child: Text('Break Types'),
           ),
           MaterialButton(
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => HolidaysPage(),
+              ),
+            ),
             child: Text('Holidays'),
           ),
           MaterialButton(
