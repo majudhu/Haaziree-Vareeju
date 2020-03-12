@@ -12,7 +12,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<ShiftTypeProvider>(
           create: (context) => ShiftTypeProvider(),
-        )
+        ),
+        ChangeNotifierProvider<OffDayTypeProvider>(
+          create: (context) => OffDayTypeProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Attendance Prototype',

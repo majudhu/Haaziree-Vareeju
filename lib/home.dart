@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haazireevareeju/offday/offdays_page.dart';
 import 'package:haazireevareeju/shift/shifts_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -22,7 +23,11 @@ class HomePage extends StatelessWidget {
             child: Text('Shift Types'),
           ),
           MaterialButton(
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => OffDaysPage(),
+              ),
+            ),
             child: Text('Offday Types'),
           ),
           MaterialButton(
