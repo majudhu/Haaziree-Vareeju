@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:haazireevareeju/shift/shifts_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Attendance Protoype"),
+        title: Text('Attendance Protoype'),
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -13,28 +14,32 @@ class HomePage extends StatelessWidget {
         padding: EdgeInsets.all(20),
         children: <Widget>[
           FlatButton(
-            onPressed: () {},
-            child: Text("Shift Types"),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ShiftsPage(),
+              ),
+            ),
+            child: Text('Shift Types'),
           ),
           MaterialButton(
             onPressed: () {},
-            child: Text("Offday Types"),
+            child: Text('Offday Types'),
           ),
           MaterialButton(
             onPressed: () {},
-            child: Text("Break Types"),
+            child: Text('Break Types'),
           ),
           MaterialButton(
             onPressed: () {},
-            child: Text("Holidays"),
+            child: Text('Holidays'),
           ),
           MaterialButton(
             onPressed: () {},
-            child: Text("Settings"),
+            child: Text('Settings'),
           ),
           MaterialButton(
             onPressed: () {},
-            child: Text("Staff"),
+            child: Text('Staff'),
           ),
         ],
       ),
