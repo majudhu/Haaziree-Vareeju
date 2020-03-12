@@ -13,14 +13,36 @@ class ShiftEditPage extends StatefulWidget {
   _ShiftEditPageState createState() => _ShiftEditPageState();
 }
 
+
 class _ShiftEditPageState extends State<ShiftEditPage> {
+
+  final shiftId = TextEditingController();
+  final name = TextEditingController();
+  final start = TextEditingController();
+  final duration = TextEditingController();
+  final active = TextEditingController();
+  final hours = TextEditingController();
+  final miniutes = TextEditingController();
+  bool _active = true;
+
+
+  @override
+  void initState(){
+    super.initState();
+    if(widget.shift != null)
+      setState(() {
+        shiftId.text = widget.shift.shiftId.toString();
+        name.text = widget.shift.name;
+        start.text = widget.shift.start.toString();
+        duration.text = widget.shift.duration.toString();
+        active.text = widget.shift.active.toString();
+      });
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    final shiftId = TextEditingController();
-    final name = TextEditingController();
-    final start = TextEditingController();
-    final duration = TextEditingController();
-    final active = TextEditingController();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -40,32 +62,57 @@ class _ShiftEditPageState extends State<ShiftEditPage> {
             controller: start,
             decoration: InputDecoration(labelText: 'Start'),
           ),
-          TextField(
-            controller: duration,
-            decoration: InputDecoration(labelText: 'Duration'),
+          Row(
+            children: <Widget>[
+              Text("Duration"),
+
+              Expanded(
+                child: TextField(
+                  controller: hours,
+                  decoration: InputDecoration(labelText: 'Hours'),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: miniutes,
+                  decoration: InputDecoration(labelText: 'Minutes'),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+            ],
           ),
-          TextField(
-            controller: active,
-            decoration: InputDecoration(labelText: 'Active'),
+          CheckboxListTile(
+            title: Text("Active"),
+            value: _active,
+            onChanged: (bool resp){
+              setState(() {
+                _active = !resp;
+              });
+            },
           ),
+//          TextField(
+//            controller: active,
+//            decoration: InputDecoration(labelText: 'Active'),
+//          ),
           MaterialButton(
             onPressed: () {
               if (widget.shift != null) {
-                widget.shift.shiftId = 1;
-                widget.shift.start = DateTime.now();
-                widget.shift.name = 'Morning';
-                widget.shift.duration = Duration(hours: 1);
-                widget.shift.active = true;
+                widget.shift.shiftId = int.tryParse(shiftId.text);
+                widget.shift.start = DateTime.tryParse(start.text);
+                widget.shift.name = name.text;
+                widget.shift.duration = Duration(hours: int.tryParse(duration.text));
+                widget.shift.active = _active;
               } else {
                 Provider.of<ShiftTypeProvider>(context, listen: false)
                     .shifts
                     .add(
-                      ShiftType(
-                        shiftId: 1,
-                        start: DateTime.now(),
-                        name: 'Morning',
-                        active: true,
-                        duration: Duration(hours: 1),
+                       ShiftType(
+                        shiftId: int.tryParse(shiftId.text),
+                        start: DateTime.tryParse(start.text),
+                        name: name.text,
+                        active: _active,
+                        duration: Duration(hours: int.tryParse(duration.text)),
                       ),
                     );
               }
@@ -79,4 +126,5 @@ class _ShiftEditPageState extends State<ShiftEditPage> {
       ),
     );
   }
+
 }
