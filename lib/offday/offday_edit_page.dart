@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/offday/offday_type.dart';
 import 'package:provider/provider.dart';
+
+import 'offday_type.dart';
 
 class OffDaysEditPage extends StatefulWidget {
   final OffDayType offDayType;

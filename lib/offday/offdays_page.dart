@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/offday/offday_edit_page.dart';
 import 'package:provider/provider.dart';
 
 import 'offday_type.dart';
+import 'offday_edit_page.dart';
 
 class OffDaysPage extends StatelessWidget {
   @override

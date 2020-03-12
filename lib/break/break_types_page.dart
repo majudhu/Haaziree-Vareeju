@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'break_type.dart';
 import 'breaktype_edit_page.dart';
 
-class OffDaysPage extends StatelessWidget {
+class BreakTypesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +14,9 @@ class OffDaysPage extends StatelessWidget {
       body: Consumer<BreakTypesProvider>(
         builder: (context, breakTypes, child) {
           return ListView.builder(
-            itemCount: breakTypes.offDayTypes.length,
+            itemCount: breakTypes.breakTypes.length,
             itemBuilder: (context, index) {
-              final breakType = breakTypes.offDayTypes[index];
+              final breakType = breakTypes.breakTypes[index];
               return ListTile(
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(

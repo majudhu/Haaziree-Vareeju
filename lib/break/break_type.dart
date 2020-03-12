@@ -15,5 +15,5 @@ class BreakType {
 }
 
 class BreakTypesProvider with ChangeNotifier {
-  List<BreakType> offDayTypes = List<BreakType>();
+  List<BreakType> breakTypes = List<BreakType>();
 }

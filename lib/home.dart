@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/offday/offdays_page.dart';
-import 'package:haazireevareeju/shift/shifts_page.dart';
+
+import 'offday/offdays_page.dart';
+import 'shift/shifts_page.dart';
+import 'break/break_types_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -31,7 +33,11 @@ class HomePage extends StatelessWidget {
             child: Text('Offday Types'),
           ),
           MaterialButton(
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BreakTypesPage(),
+              ),
+            ),
             child: Text('Break Types'),
           ),
           MaterialButton(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/break/break_type.dart';
-import 'package:haazireevareeju/offday/offday_type.dart';
 import 'package:provider/provider.dart';
+
+import 'break_type.dart';
 
 class BreakTypeEditPage extends StatefulWidget {
   final BreakType breakType;
@@ -13,7 +13,7 @@ class BreakTypeEditPage extends StatefulWidget {
 }
 
 class _BreakTypeEditPageState extends State<BreakTypeEditPage> {
-  final offDayTypeId = TextEditingController();
+  final breakTypeId = TextEditingController();
   final name = TextEditingController();
   bool paid = true;
   bool active = true;
@@ -23,7 +23,7 @@ class _BreakTypeEditPageState extends State<BreakTypeEditPage> {
     super.initState();
     if (widget.breakType != null)
       setState(() {
-        offDayTypeId.text = widget.breakType.typeId.toString();
+        breakTypeId.text = widget.breakType.typeId.toString();
         name.text = widget.breakType.name;
         paid = widget.breakType.paid;
         active = widget.breakType.active;
@@ -40,8 +40,8 @@ class _BreakTypeEditPageState extends State<BreakTypeEditPage> {
         padding: EdgeInsets.all(10),
         children: <Widget>[
           TextField(
-            controller: offDayTypeId,
-            decoration: InputDecoration(labelText: 'Offday Type ID'),
+            controller: breakTypeId,
+            decoration: InputDecoration(labelText: 'Break Type ID'),
           ),
           TextField(
             controller: name,
@@ -60,16 +60,16 @@ class _BreakTypeEditPageState extends State<BreakTypeEditPage> {
           MaterialButton(
             onPressed: () {
               if (widget.breakType != null) {
-                widget.breakType.typeId = int.tryParse(offDayTypeId.text);
+                widget.breakType.typeId = int.tryParse(breakTypeId.text);
                 widget.breakType.name = name.text;
                 widget.breakType.paid = paid;
                 widget.breakType.active = active;
               } else
-                Provider.of<OffDayTypeProvider>(context, listen: false)
-                    .offDayTypes
+                Provider.of<BreakTypesProvider>(context, listen: false)
+                    .breakTypes
                     .add(
-                      OffDayType(
-                        typeId: int.tryParse(offDayTypeId.text),
+                      BreakType(
+                        typeId: int.tryParse(breakTypeId.text),
                         name: name.text,
                         active: paid,
                         paid: active,
