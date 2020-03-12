@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:haazireevareeju/break/break_type.dart';
 import 'package:haazireevareeju/holidays/holiday.dart';
 import 'package:haazireevareeju/home.dart';
+import 'package:haazireevareeju/settings/settings.dart';
+import 'package:haazireevareeju/settings/settings_page.dart';
 import 'package:provider/provider.dart';
 
 import 'shift/shift_type.dart';
@@ -25,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<HolidaysProvider>(
           create: (context) => HolidaysProvider(),
+        ),
+        ChangeNotifierProvider<SettingsProvider>(
+          create: (context) => SettingsProvider(),
         ),
       ],
       child: MaterialApp(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/holidays/holidays_page.dart';
 
+import 'holidays/holidays_page.dart';
+import 'settings/settings_page.dart';
 import 'offday/offdays_page.dart';
 import 'shift/shifts_page.dart';
 import 'break/break_types_page.dart';
@@ -50,7 +51,11 @@ class HomePage extends StatelessWidget {
             child: Text('Holidays'),
           ),
           MaterialButton(
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => SettingsPage(),
+              ),
+            ),
             child: Text('Settings'),
           ),
           MaterialButton(
