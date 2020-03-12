@@ -1,7 +1,7 @@
 class ShiftType {
   int shiftId;
   String name;
-  DateTime start;
+  Duration start;
   Duration duration;
   bool active;
 
