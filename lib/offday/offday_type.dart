@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class OffDayType {
   int typeId;
   String name;
@@ -10,4 +12,8 @@ class OffDayType {
     this.paid,
     this.active = true,
   });
+}
+
+class OffDayTypeProvider with ChangeNotifier {
+  List<OffDayType> offDayTypes = List<OffDayType>();
 }

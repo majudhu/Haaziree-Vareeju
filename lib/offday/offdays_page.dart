@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:haazireevareeju/offday/offday_edit_page.dart';
 import 'package:provider/provider.dart';
 
-import 'package:haazireevareeju/provider_model.dart';
+import 'offday_type.dart';
 
 class OffDaysPage extends StatelessWidget {
   @override
@@ -24,8 +24,8 @@ class OffDaysPage extends StatelessWidget {
                   ),
                 ),
                 title: Text(offDayType.name),
-                subtitle: Text(offDayType.paid.toString()),
-                trailing: Text(offDayType.active.toString()),
+                subtitle: Text(offDayType.paid ? 'Paid' : 'Unpaid'),
+                trailing: Text(offDayType.active ? 'Active' : 'Inactive'),
               );
             },
           );
