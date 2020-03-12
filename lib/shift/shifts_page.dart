@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haazireevareeju/shift/shift_edit_page.dart';
+import 'package:haazireevareeju/shift/shift_type.dart';
 import 'package:provider/provider.dart';
-
-import 'package:haazireevareeju/provider_model.dart';
 
 class ShiftsPage extends StatelessWidget {
   @override
@@ -23,7 +22,12 @@ class ShiftsPage extends StatelessWidget {
                     builder: (context) => ShiftEditPage(shift),
                   ),
                 ),
-                title: Text(shift.name),
+                title: Text(
+                  shift.name,
+                  style: TextStyle(
+                      decoration:
+                          shift.active ? null : TextDecoration.lineThrough),
+                ),
                 subtitle: Text(shift.start.toString()),
                 trailing: Text(shift.duration.toString()),
               );
