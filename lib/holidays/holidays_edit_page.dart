@@ -45,6 +45,9 @@ class _HolidaysEditPageState extends State<HolidaysEditPage> {
             readOnly: true,
             controller: TextEditingController(
                 text: _date?.toString()?.substring(0, 10)),
+            decoration: InputDecoration(
+              labelText: 'Date'
+            ),
             onTap: () async {
               final date = await showDatePicker(
                 context: context,
