@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'staff/staffs_page.dart';
 import 'holidays/holidays_page.dart';
 import 'settings/settings_page.dart';
 import 'offday/offdays_page.dart';
@@ -59,7 +60,11 @@ class HomePage extends StatelessWidget {
             child: Text('Settings'),
           ),
           MaterialButton(
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => StaffsPage(),
+              ),
+            ),
             child: Text('Staff'),
           ),
         ],

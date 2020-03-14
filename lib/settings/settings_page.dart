@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/settings/settings.dart';
 import 'package:provider/provider.dart';
+
+import 'settings.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shifts List'),
+        title: Text('Settings'),
       ),
       body: ListView(
         padding: EdgeInsets.all(10),

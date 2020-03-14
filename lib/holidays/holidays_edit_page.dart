@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/holidays/holiday.dart';
 import 'package:provider/provider.dart';
+
+import 'holiday.dart';
 
 class HolidaysEditPage extends StatefulWidget {
   final Holiday holiday;

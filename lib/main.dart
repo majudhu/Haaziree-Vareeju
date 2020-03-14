@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:haazireevareeju/break/break_type.dart';
-import 'package:haazireevareeju/holidays/holiday.dart';
-import 'package:haazireevareeju/home.dart';
-import 'package:haazireevareeju/settings/settings.dart';
-import 'package:haazireevareeju/settings/settings_page.dart';
 import 'package:provider/provider.dart';
 
+import 'break/break_type.dart';
+import 'holidays/holiday.dart';
+import 'home.dart';
+import 'settings/settings.dart';
+import 'staff/staff.dart';
 import 'shift/shift_type.dart';
 import 'offday/offday_type.dart';
 
@@ -30,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<SettingsProvider>(
           create: (context) => SettingsProvider(),
+        ),
+        ChangeNotifierProvider<StaffsProvider>(
+          create: (context) => StaffsProvider(),
         ),
       ],
       child: MaterialApp(
