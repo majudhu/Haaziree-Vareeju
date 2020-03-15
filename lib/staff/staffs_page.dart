@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haazireevareeju/staff/roster_list.dart';
 import 'package:provider/provider.dart';
 
 import 'staff.dart';
@@ -20,7 +21,7 @@ class StaffsPage extends StatelessWidget {
               return ListTile(
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => StaffEditPage(staff),
+                    builder: (context) => RosterListPage(staff),
                   ),
                 ),
                 title: Text(staff.name),

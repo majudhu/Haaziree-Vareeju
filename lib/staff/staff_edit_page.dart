@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'staff.dart';
@@ -37,7 +38,7 @@ class _StaffEditPageState extends State<StaffEditPage> {
         padding: EdgeInsets.all(20),
         children: <Widget>[
           TextField(
-            controller:  _staffId,
+            controller: _staffId,
             decoration: InputDecoration(labelText: 'Staff ID'),
           ),
           TextField(
@@ -50,9 +51,7 @@ class _StaffEditPageState extends State<StaffEditPage> {
                 widget.staff.staffId = int.tryParse(_staffId.text);
                 widget.staff.name = _name.text;
               } else {
-                Provider.of<StaffsProvider>(context, listen: false)
-                    .staffs
-                    .add(
+                Provider.of<StaffsProvider>(context, listen: false).staffs.add(
                       Staff(
                         staffId: int.tryParse(_staffId.text),
                         name: _name.text,
@@ -62,7 +61,7 @@ class _StaffEditPageState extends State<StaffEditPage> {
               Navigator.of(context).pop();
             },
             child: Text('Save'),
-          )
+          ),
         ],
       ),
     );
