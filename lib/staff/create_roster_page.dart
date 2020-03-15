@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haazireevareeju/staff/staff.dart';
-import 'package:provider/provider.dart';
 
 class CreateRosterPage extends StatefulWidget {
   final List<Shift> shifts;

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haazireevareeju/staff/create_roster_page.dart';
 import 'package:haazireevareeju/staff/staff.dart';
-import 'package:haazireevareeju/staff/staff_edit_page.dart';
-import 'package:provider/provider.dart';
 
 class RosterListPage extends StatelessWidget {
   final Staff staff;
