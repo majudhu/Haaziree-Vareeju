@@ -10,7 +10,9 @@ class Staff {
 }
 
 class StaffsProvider with ChangeNotifier {
-  List<Staff> staffs = List<Staff>();
+  final staffs = List<Staff>();
+
+  notify() => notifyListeners();
 }
 
 class Shift {
@@ -19,3 +21,4 @@ class Shift {
 
   Shift(this.start, this.end);
 }
+

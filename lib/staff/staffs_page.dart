@@ -21,7 +21,7 @@ class StaffsPage extends StatelessWidget {
               return ListTile(
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => RosterListPage(staff),
+                    builder: (context) => RosterListPage(staff.shifts),
                   ),
                 ),
                 title: Text(staff.name),

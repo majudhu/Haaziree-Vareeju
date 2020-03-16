@@ -50,12 +50,14 @@ class _StaffEditPageState extends State<StaffEditPage> {
                 widget.staff.staffId = int.tryParse(_staffId.text);
                 widget.staff.name = _name.text;
               } else {
-                Provider.of<StaffsProvider>(context, listen: false).staffs.add(
-                      Staff(
-                        staffId: int.tryParse(_staffId.text),
-                        name: _name.text,
-                      ),
-                    );
+                Provider.of<StaffsProvider>(context, listen: false)
+                  ..staffs.add(
+                    Staff(
+                      staffId: int.tryParse(_staffId.text),
+                      name: _name.text,
+                    ),
+                  )
+                  ..notify();
               }
               Navigator.of(context).pop();
             },

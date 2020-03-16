@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haazireevareeju/staff/staff.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class CreateRosterPage extends StatefulWidget {
   final List<Shift> shifts;
@@ -274,6 +276,8 @@ class _CreateRosterPageState extends State<CreateRosterPage> {
                 ),
               );
               widget.shifts.addAll(shifts);
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
               // widget.staff.shifts.addAll(dates);
             },
             child: Text('Create Roster'),
