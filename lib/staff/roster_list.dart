@@ -15,8 +15,14 @@ class RosterListPage extends StatelessWidget {
       body: ListView.builder(
         itemCount: shifts.length,
         itemBuilder: (context, index) => ListTile(
-          title: Text(shifts[index].start.toString()),
-          subtitle: Text(shifts[index].end.toString()),
+          title: Text(shifts[index].start.toString().substring(0, 16) +
+              '(' +
+              (shifts[index].checkIn?.toString()?.substring(11, 16) ?? '') +
+              ')'),
+          subtitle: Text(shifts[index].end.toString().substring(0, 16) +
+              '(' +
+              (shifts[index].checkOut?.toString()?.substring(11, 16) ?? '') +
+              ')'),
           trailing: IconButton(
             icon: Icon(Icons.delete_forever),
             onPressed: () {
@@ -27,12 +33,11 @@ class RosterListPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => Navigator.of(context)
-            .push(
-              MaterialPageRoute(
-                builder: (context) => CreateRosterPage(shifts),
-              ),
-            ),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => CreateRosterPage(shifts),
+          ),
+        ),
       ),
     );
   }

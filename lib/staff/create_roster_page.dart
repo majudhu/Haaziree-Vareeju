@@ -277,7 +277,6 @@ class _CreateRosterPageState extends State<CreateRosterPage> {
               );
               widget.shifts.addAll(shifts);
               Navigator.of(context).pop();
-              Navigator.of(context).pop();
               // widget.staff.shifts.addAll(dates);
             },
             child: Text('Create Roster'),

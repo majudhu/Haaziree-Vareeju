@@ -18,6 +18,8 @@ class StaffsProvider with ChangeNotifier {
 class Shift {
   final DateTime start;
   final DateTime end;
+  DateTime checkIn;
+  DateTime checkOut;
 
   Shift(this.start, this.end);
 }

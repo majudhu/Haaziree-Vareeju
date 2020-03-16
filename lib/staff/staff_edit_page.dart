@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:haazireevareeju/holidays/holiday.dart';
+import 'package:haazireevareeju/staff/roster_list.dart';
 import 'package:provider/provider.dart';
 
+import 'create_roster_page.dart';
 import 'staff.dart';
 
 class StaffEditPage extends StatefulWidget {
@@ -63,6 +66,139 @@ class _StaffEditPageState extends State<StaffEditPage> {
             },
             child: Text('Save'),
           ),
+          if (widget.staff != null) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                MaterialButton(
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          CreateRosterPage(widget.staff.shifts))),
+                  child: Text('Create Roster'),
+                ),
+                MaterialButton(
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          RosterListPage(widget.staff.shifts))),
+                  child: Text('View Roster'),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                MaterialButton(
+                  onPressed: () {
+                    final now = DateTime.now();
+
+                    final holidays =
+                        Provider.of<HolidaysProvider>(context, listen: false)
+                            .holidays;
+                    final holidayToday = holidays.firstWhere(
+                        (holiday) => (holiday.date.year == now.year &&
+                            holiday.date.month == now.month &&
+                            holiday.date.day == now.day),
+                        orElse: () => null);
+                    if (holidayToday != null) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Today is a holiday'),
+                          content: Text('Today is ${holidayToday.name}'),
+                        ),
+                      );
+                      return;
+                    }
+
+                    Shift currentShift = widget.staff.shifts.first;
+                    for (final shift in widget.staff.shifts) {
+                      if (shift.end.isAfter(now)) {
+                        if (shift.start.isBefore(now)) {
+                          currentShift = shift;
+                          break;
+                        }
+                        if (shift.start.difference(now) <
+                            currentShift.start.difference(now)) {
+                          currentShift = shift;
+                        }
+                      }
+                    }
+                    if (currentShift.end.isAfter(now)) {
+                      if (currentShift.start.isBefore(now)) {
+                        currentShift.checkIn = now;
+                        final late =
+                            now.difference(currentShift.start).inMinutes;
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text('You are $late minutes late'),
+                            content: Text('Checked-in to ' +
+                                currentShift.start
+                                    .toString()
+                                    .substring(11, 16)),
+                          ),
+                        );
+                        return;
+                      } else {
+                        if (currentShift.start.difference(now).inMinutes < 30) {
+                          currentShift.checkIn = now;
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text('Checked in to shift'),
+                              content: Text(
+                                currentShift.start.toString().substring(11, 16),
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+                      }
+                    }
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('No shift found'),
+                      ),
+                    );
+                  },
+                  child: Text('Check-In'),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    final now = DateTime.now();
+                    final currentShift = widget.staff.shifts.firstWhere(
+                      (shift) =>
+                          (shift.checkIn != null) &&
+                          (shift.checkOut == null) &&
+                          (shift.end.isBefore(now)) &&
+                          (now.difference(shift.end).inMinutes < 30),
+                      orElse: () => null,
+                    );
+                    if (currentShift != null) {
+                      currentShift.checkOut = now;
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Checked out from shift'),
+                          content: Text(
+                              currentShift.start.toString().substring(11, 16)),
+                        ),
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Not shift found'),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text('Check-Out'),
+                ),
+              ],
+            ),
+          ]
         ],
       ),
     );
