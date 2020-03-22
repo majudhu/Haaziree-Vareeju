@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'staff/staffs_page.dart';
 import 'holidays/holidays_page.dart';
@@ -8,6 +9,8 @@ import 'shift/shifts_page.dart';
 import 'break/break_types_page.dart';
 
 class HomePage extends StatelessWidget {
+  static const platform = const MethodChannel('haaziree/test');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +70,12 @@ class HomePage extends StatelessWidget {
             ),
             child: Text('Staff'),
           ),
+          MaterialButton(
+            onPressed: () async {
+              print(await platform.invokeMethod('test'));
+            },
+            child: Text('methodcall'),
+          )
         ],
       ),
     );
