@@ -39,18 +39,13 @@ class MainActivity : FlutterActivity() {
                                                     result.success("permission denied")
                                                 }
                                             }
-
                                         }
                                     },
                                     IntentFilter("test.maju.gt168-kotlin.USB_PERMISSION")
                             )
                             usbManager.requestPermission(device, pi)
                         }
-                        "test" -> {
-                            SCOPE.launch {
-                                result.success(test())
-                            }
-                        }
+                        "test" -> SCOPE.launch { result.success(test()) }
                         else -> result.success("kenot ${call.method}")
                     }
                 }
