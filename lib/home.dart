@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _method = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Text('Attendance Protoype'),
@@ -70,11 +71,20 @@ class HomePage extends StatelessWidget {
             ),
             child: Text('Staff'),
           ),
-          MaterialButton(
-            onPressed: () async {
-              print(await platform.invokeMethod('test'));
-            },
-            child: Text('methodcall'),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              TextField(
+                controller: _method,
+              ),
+              MaterialButton(
+                onPressed: () async {
+                  print(await platform.invokeMethod(_method.text));
+                },
+                child: Text('methodcall'),
+              ),
+            ],
           )
         ],
       ),

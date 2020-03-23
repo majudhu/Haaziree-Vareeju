@@ -1,46 +1,57 @@
 package test.maju.haazireevareeju
 
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.hardware.usb.UsbConstants
-import android.hardware.usb.UsbManager
+import android.content.*
+import android.hardware.usb.*
 import androidx.annotation.NonNull
-import io.flutter.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
 import kotlinx.coroutines.*
 
+const val VID = 0x2009
+const val PID = 0x7638
+
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "haaziree/test"
-    private val SCOPE = CoroutineScope(Job() + Dispatchers.IO)
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
 
-        MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
-                .setMethodCallHandler(
-                        { call, result ->
-                            SCOPE.launch {
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
+                .setMethodCallHandler { call, result ->
+                    when (call.method) {
+                        "getperm" -> {
+                            val usbManager = applicationContext.getSystemService(Context.USB_SERVICE) as UsbManager
+                            val device = usbManager.deviceList.values.firstOrNull { it.vendorId == 0x2009 && it.productId == 0x7638 }!!
+                            val pi = PendingIntent.getBroadcast(applicationContext, 0, Intent("test.maju.gt168-kotlin.USB_PERMISSION"), 0)
+                            applicationContext.registerReceiver(
+                                    object : BroadcastReceiver() {
+                                        override fun onReceive(applicationContext: Context, intent: Intent) {
+                                            applicationContext.unregisterReceiver(this)
+                                            if (intent.action == "test.maju.gt168-kotlin.USB_PERMISSION") {
+                                                if (intent.getBooleanExtra(
+                                                                UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                                                    result.success("permission granted")
+                                                } else {
+                                                    result.success("permission denied")
+                                                }
+                                            }
+
+                                        }
+                                    },
+                                    IntentFilter("test.maju.gt168-kotlin.USB_PERMISSION")
+                            )
+                            usbManager.requestPermission(device, pi)
+                        }
+                        "test" -> {
+                            GlobalScope.launch {
                                 withContext(Dispatchers.IO) {
                                     val res = ByteArray(64)
                                     val csw = ByteArray(64)
-                                    val usbManager = applicationContext.getSystemService(android.content.Context.USB_SERVICE) as UsbManager
+                                    val usbManager = applicationContext.getSystemService(Context.USB_SERVICE) as UsbManager
                                     val device = usbManager.deviceList.values.firstOrNull { it.vendorId == 0x2009 && it.productId == 0x7638 }!!
-                                    val pi = PendingIntent.getBroadcast(applicationContext, 0, Intent("ch.serverbox.android.USB"), 0)
-                                    applicationContext.registerReceiver(
-                                            object : BroadcastReceiver() {
-                                                override fun onReceive(applicationContext: Context, intent: Intent) {
-                                                    applicationContext.unregisterReceiver(this)
-                                                }
-                                            },
-                                            IntentFilter("ch.serverbox.android.USB")
-                                    )
-                                    usbManager.requestPermission(device, pi)
                                     val usbInterface = device.getInterface(0)
                                     val endPoints = (0 until usbInterface.endpointCount)
                                             .map { usbInterface.getEndpoint(it) }
@@ -66,7 +77,7 @@ class MainActivity : FlutterActivity() {
                                     val r7 = usbDeviceConnection.releaseInterface(usbInterface)
                                     usbDeviceConnection.close()
 
-                                    SCOPE.launch {
+                                    GlobalScope.launch {
                                         withContext(Dispatchers.Main) {
                                             result.success("$r1, $r2, $r3, $r4, $r5, $r6, $r7")
                                         }
@@ -74,6 +85,8 @@ class MainActivity : FlutterActivity() {
                                 }
                             }
                         }
-                )
+                        else -> result.success("kenot ${call.method}")
+                    }
+                }
     }
 }
