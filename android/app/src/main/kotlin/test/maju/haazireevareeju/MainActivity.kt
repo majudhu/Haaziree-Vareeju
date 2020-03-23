@@ -15,7 +15,7 @@ const val PID = 0x7638
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "haaziree/test"
-    private val SCOPE = CoroutineScope(Dispatchers.IO)
+    private val SCOPE = CoroutineScope(Job() + Dispatchers.Main)
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
@@ -48,9 +48,7 @@ class MainActivity : FlutterActivity() {
                         }
                         "test" -> {
                             SCOPE.launch {
-                                withContext(Dispatchers.Main) {
-                                    result.success(test())
-                                }
+                                result.success(test())
                             }
                         }
                         else -> result.success("kenot ${call.method}")
