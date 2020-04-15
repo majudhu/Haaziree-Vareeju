@@ -18,8 +18,16 @@ jobs:
         with:
           flutter-version: '1.12.13+hotfix.9'
       - run: flutter pub get
-      - run: flutter build apk
+      - run: flutter build apk --split-per-abi
       - uses: actions/upload-artifact@master
         with:
-          name: android-app
-          path: build/app/outputs/apk/release/app-release.apk
+          name: app-armeabi-v7a-release
+          path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
+      - uses: actions/upload-artifact@master
+        with:
+          name: app-arm64-v8a-release
+          path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+      - uses: actions/upload-artifact@master
+        with:
+          name: app-x86_64-release
+          path: build/app/outputs/apk/release/app-x86_64-release.apk
