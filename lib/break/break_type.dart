@@ -7,13 +7,13 @@ class BreakType {
   bool active;
 
   BreakType({
-    this.typeId,
-    this.name,
-    this.paid,
+    required this.typeId,
+    required this.name,
+    required this.paid,
     this.active = true,
   });
 }
 
 class BreakTypesProvider with ChangeNotifier {
-  List<BreakType> breakTypes = List<BreakType>();
+  List<BreakType> breakTypes = [];
 }

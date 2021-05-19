@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'offday_type.dart';
 
 class OffDaysEditPage extends StatefulWidget {
-  final OffDayType offDayType;
+  final OffDayType? offDayType;
 
   OffDaysEditPage([this.offDayType]);
 
@@ -23,10 +23,10 @@ class _OffDaysEditPageState extends State<OffDaysEditPage> {
     super.initState();
     if (widget.offDayType != null)
       setState(() {
-        offDayTypeId.text = widget.offDayType.typeId.toString();
-        name.text = widget.offDayType.name;
-        paid = widget.offDayType.paid;
-        active = widget.offDayType.active;
+        offDayTypeId.text = widget.offDayType!.typeId.toString();
+        name.text = widget.offDayType!.name;
+        paid = widget.offDayType!.paid;
+        active = widget.offDayType!.active;
       });
   }
 
@@ -50,26 +50,27 @@ class _OffDaysEditPageState extends State<OffDaysEditPage> {
           CheckboxListTile(
             title: Text('Paid'),
             value: paid,
-            onChanged: (value) => setState(() => paid = value),
+            onChanged: (value) => setState(() => paid = value ?? paid),
           ),
           CheckboxListTile(
             title: Text('Active'),
             value: active,
-            onChanged: (value) => setState(() => active = value),
+            onChanged: (value) => setState(() => active = value ?? active),
           ),
           MaterialButton(
             onPressed: () {
               if (widget.offDayType != null) {
-                widget.offDayType.typeId = int.tryParse(offDayTypeId.text);
-                widget.offDayType.name = name.text;
-                widget.offDayType.paid = paid;
-                widget.offDayType.active = active;
+                widget.offDayType!.typeId =
+                    int.tryParse(offDayTypeId.text) ?? 0;
+                widget.offDayType!.name = name.text;
+                widget.offDayType!.paid = paid;
+                widget.offDayType!.active = active;
               } else
                 Provider.of<OffDayTypeProvider>(context, listen: false)
                     .offDayTypes
                     .add(
                       OffDayType(
-                        typeId: int.tryParse(offDayTypeId.text),
+                        typeId: int.tryParse(offDayTypeId.text) ?? 0,
                         name: name.text,
                         active: paid,
                         paid: active,

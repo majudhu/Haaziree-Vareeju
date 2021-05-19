@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'shift_type.dart';
 
 class ShiftEditPage extends StatefulWidget {
-  final ShiftType shift;
+  final ShiftType? shift;
 
   ShiftEditPage([this.shift]);
 
@@ -16,8 +16,8 @@ class ShiftEditPage extends StatefulWidget {
 class _ShiftEditPageState extends State<ShiftEditPage> {
   final _shiftId = TextEditingController();
   final _name = TextEditingController();
-  TimeOfDay _start;
-  TimeOfDay _end;
+  TimeOfDay? _start;
+  TimeOfDay? _end;
   bool _active = true;
 
   @override
@@ -25,18 +25,18 @@ class _ShiftEditPageState extends State<ShiftEditPage> {
     super.initState();
     if (widget.shift != null)
       setState(() {
-        _shiftId.text = widget.shift.shiftId.toString();
-        _name.text = widget.shift.name;
+        _shiftId.text = widget.shift!.shiftId.toString();
+        _name.text = widget.shift!.name;
         _start = TimeOfDay(
-          hour: widget.shift.start.inHours,
-          minute: widget.shift.start.inMinutes % 60,
+          hour: widget.shift!.start.inHours,
+          minute: widget.shift!.start.inMinutes % 60,
         );
-        final end = widget.shift.start + widget.shift.duration;
+        final end = widget.shift!.start + widget.shift!.duration;
         _end = TimeOfDay(
           hour: end.inHours % 24,
           minute: end.inMinutes % 60,
         );
-        _active = widget.shift.active;
+        _active = widget.shift!.active;
       });
   }
 
@@ -85,7 +85,7 @@ class _ShiftEditPageState extends State<ShiftEditPage> {
           CheckboxListTile(
             title: Text("Active"),
             value: _active,
-            onChanged: (value) => setState(() => _active = value),
+            onChanged: (value) => setState(() => _active = value ?? _active),
           ),
 //          TextField(
 //            controller: active,
@@ -93,24 +93,24 @@ class _ShiftEditPageState extends State<ShiftEditPage> {
 //          ),
           MaterialButton(
             onPressed: () {
-              final end = Duration(hours: _end.hour, minutes: _end.minute);
+              final end = Duration(hours: _end!.hour, minutes: _end!.minute);
               final start =
-                  Duration(hours: _start.hour, minutes: _start.minute);
+                  Duration(hours: _start!.hour, minutes: _start!.minute);
               var duration = end - start;
               if (duration.isNegative) duration += Duration(days: 1);
 
               if (widget.shift != null) {
-                widget.shift.shiftId = int.tryParse(_shiftId.text);
-                widget.shift.name = _name.text;
-                widget.shift.start = start;
-                widget.shift.duration = duration;
-                widget.shift.active = _active;
+                widget.shift!.shiftId = int.tryParse(_shiftId.text) ?? 0;
+                widget.shift!.name = _name.text;
+                widget.shift!.start = start;
+                widget.shift!.duration = duration;
+                widget.shift!.active = _active;
               } else {
                 Provider.of<ShiftTypeProvider>(context, listen: false)
                     .shifts
                     .add(
                       ShiftType(
-                        shiftId: int.tryParse(_shiftId.text),
+                        shiftId: int.tryParse(_shiftId.text) ?? 0,
                         name: _name.text,
                         start: start,
                         duration: duration,

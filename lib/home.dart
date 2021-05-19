@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
         childAspectRatio: 2,
         padding: EdgeInsets.all(20),
         children: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => ShiftsPage(),

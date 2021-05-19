@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'break_type.dart';
 
 class BreakTypeEditPage extends StatefulWidget {
-  final BreakType breakType;
+  final BreakType? breakType;
 
   BreakTypeEditPage([this.breakType]);
 
@@ -21,13 +21,15 @@ class _BreakTypeEditPageState extends State<BreakTypeEditPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.breakType != null)
+    try {
+      final breakType = widget.breakType!;
       setState(() {
-        breakTypeId.text = widget.breakType.typeId.toString();
-        name.text = widget.breakType.name;
-        paid = widget.breakType.paid;
-        active = widget.breakType.active;
+        breakTypeId.text = breakType.typeId.toString();
+        name.text = breakType.name;
+        paid = breakType.paid;
+        active = breakType.active;
       });
+    } catch (_) {}
   }
 
   @override
@@ -50,26 +52,26 @@ class _BreakTypeEditPageState extends State<BreakTypeEditPage> {
           CheckboxListTile(
             title: Text('Paid'),
             value: paid,
-            onChanged: (value) => setState(() => paid = value),
+            onChanged: (value) => setState(() => paid = value ?? paid),
           ),
           CheckboxListTile(
             title: Text('Active'),
             value: active,
-            onChanged: (value) => setState(() => active = value),
+            onChanged: (value) => setState(() => active = value ?? active),
           ),
           MaterialButton(
             onPressed: () {
               if (widget.breakType != null) {
-                widget.breakType.typeId = int.tryParse(breakTypeId.text);
-                widget.breakType.name = name.text;
-                widget.breakType.paid = paid;
-                widget.breakType.active = active;
+                widget.breakType!.typeId = int.tryParse(breakTypeId.text) ?? 0;
+                widget.breakType!.name = name.text;
+                widget.breakType!.paid = paid;
+                widget.breakType!.active = active;
               } else
                 Provider.of<BreakTypesProvider>(context, listen: false)
                     .breakTypes
                     .add(
                       BreakType(
-                        typeId: int.tryParse(breakTypeId.text),
+                        typeId: int.tryParse(breakTypeId.text) ?? 0,
                         name: name.text,
                         active: paid,
                         paid: active,

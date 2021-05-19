@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:haazireevareeju/staff/staff.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
 
 class CreateRosterPage extends StatefulWidget {
   final List<Shift> shifts;
@@ -34,7 +32,7 @@ class _CreateRosterPageState extends State<CreateRosterPage> {
       appBar: AppBar(title: Text('Create Roster')),
       body: ListView(
         children: <Widget>[
-          Text('Create Roster', style: Theme.of(context).textTheme.headline),
+          Text('Create Roster', style: Theme.of(context).textTheme.headline5),
           Row(
             children: <Widget>[
               Expanded(
@@ -85,7 +83,7 @@ class _CreateRosterPageState extends State<CreateRosterPage> {
                   ),
                   decoration: InputDecoration(labelText: '# Days'),
                   keyboardType: TextInputType.number,
-                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   onSubmitted: (days) => setState(
                     () => _rosterEnd = _rosterStart.add(
                       Duration(days: (int.tryParse(days) ?? 1) - 1),
@@ -139,7 +137,7 @@ class _CreateRosterPageState extends State<CreateRosterPage> {
                   ),
                   decoration: InputDecoration(labelText: 'hrs'),
                   keyboardType: TextInputType.number,
-                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
             ],
@@ -147,7 +145,7 @@ class _CreateRosterPageState extends State<CreateRosterPage> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Text('Working Days',
-                style: Theme.of(context).textTheme.subhead),
+                style: Theme.of(context).textTheme.subtitle1),
           ),
           Row(
             children: <Widget>[

@@ -3,14 +3,14 @@ import 'package:flutter/foundation.dart';
 class Staff {
   int staffId;
   String name;
-  final shifts = List<Shift>();
-  final offDays = List<DateTime>();
+  List<Shift> shifts = [];
+  List<DateTime> offDays = [];
 
-  Staff({this.staffId, this.name});
+  Staff({required this.staffId, required this.name});
 }
 
 class StaffsProvider with ChangeNotifier {
-  final staffs = List<Staff>();
+  List<Staff> staffs = [];
 
   notify() => notifyListeners();
 }
@@ -18,9 +18,8 @@ class StaffsProvider with ChangeNotifier {
 class Shift {
   final DateTime start;
   final DateTime end;
-  DateTime checkIn;
-  DateTime checkOut;
+  DateTime? checkIn;
+  DateTime? checkOut;
 
   Shift(this.start, this.end);
 }
-

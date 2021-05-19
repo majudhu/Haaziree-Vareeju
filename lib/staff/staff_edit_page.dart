@@ -8,7 +8,7 @@ import 'create_roster_page.dart';
 import 'staff.dart';
 
 class StaffEditPage extends StatefulWidget {
-  final Staff staff;
+  final Staff? staff;
 
   StaffEditPage([this.staff]);
 
@@ -25,8 +25,8 @@ class _StaffEditPageState extends State<StaffEditPage> {
     super.initState();
     if (widget.staff != null)
       setState(() {
-        _name.text = widget.staff.name;
-        _staffId.text = widget.staff.staffId.toString();
+        _name.text = widget.staff!.name;
+        _staffId.text = widget.staff!.staffId.toString();
       });
   }
 
@@ -50,13 +50,13 @@ class _StaffEditPageState extends State<StaffEditPage> {
           MaterialButton(
             onPressed: () {
               if (widget.staff != null) {
-                widget.staff.staffId = int.tryParse(_staffId.text);
-                widget.staff.name = _name.text;
+                widget.staff!.staffId = int.tryParse(_staffId.text) ?? 0;
+                widget.staff!.name = _name.text;
               } else {
                 Provider.of<StaffsProvider>(context, listen: false)
                   ..staffs.add(
                     Staff(
-                      staffId: int.tryParse(_staffId.text),
+                      staffId: int.tryParse(_staffId.text) ?? 0,
                       name: _name.text,
                     ),
                   )
@@ -73,13 +73,13 @@ class _StaffEditPageState extends State<StaffEditPage> {
                 MaterialButton(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
-                          CreateRosterPage(widget.staff.shifts))),
+                          CreateRosterPage(widget.staff!.shifts))),
                   child: Text('Create Roster'),
                 ),
                 MaterialButton(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
-                          RosterListPage(widget.staff.shifts))),
+                          RosterListPage(widget.staff!.shifts))),
                   child: Text('View Roster'),
                 ),
               ],
@@ -94,12 +94,12 @@ class _StaffEditPageState extends State<StaffEditPage> {
                     final holidays =
                         Provider.of<HolidaysProvider>(context, listen: false)
                             .holidays;
-                    final holidayToday = holidays.firstWhere(
+                    try {
+                      final holidayToday = holidays.firstWhere(
                         (holiday) => (holiday.date.year == now.year &&
                             holiday.date.month == now.month &&
                             holiday.date.day == now.day),
-                        orElse: () => null);
-                    if (holidayToday != null) {
+                      );
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
@@ -108,10 +108,10 @@ class _StaffEditPageState extends State<StaffEditPage> {
                         ),
                       );
                       return;
-                    }
+                    } catch (_) {}
 
-                    Shift currentShift = widget.staff.shifts.first;
-                    for (final shift in widget.staff.shifts) {
+                    Shift currentShift = widget.staff!.shifts.first;
+                    for (final shift in widget.staff!.shifts) {
                       if (shift.end.isAfter(now)) {
                         if (shift.start.isBefore(now)) {
                           currentShift = shift;
@@ -167,15 +167,14 @@ class _StaffEditPageState extends State<StaffEditPage> {
                 MaterialButton(
                   onPressed: () {
                     final now = DateTime.now();
-                    final currentShift = widget.staff.shifts.firstWhere(
-                      (shift) =>
-                          (shift.checkIn != null) &&
-                          (shift.checkOut == null) &&
-                          (shift.end.isBefore(now)) &&
-                          (now.difference(shift.end).inMinutes < 30),
-                      orElse: () => null,
-                    );
-                    if (currentShift != null) {
+                    try {
+                      final currentShift = widget.staff!.shifts.firstWhere(
+                        (shift) =>
+                            (shift.checkIn != null) &&
+                            (shift.checkOut == null) &&
+                            (shift.end.isBefore(now)) &&
+                            (now.difference(shift.end).inMinutes < 30),
+                      );
                       currentShift.checkOut = now;
                       showDialog(
                         context: context,
@@ -185,7 +184,7 @@ class _StaffEditPageState extends State<StaffEditPage> {
                               currentShift.start.toString().substring(11, 16)),
                         ),
                       );
-                    } else {
+                    } on StateError {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(

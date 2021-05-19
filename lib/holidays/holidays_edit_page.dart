@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'holiday.dart';
 
 class HolidaysEditPage extends StatefulWidget {
-  final Holiday holiday;
+  final Holiday? holiday;
 
   HolidaysEditPage([this.holiday]);
 
@@ -15,18 +15,20 @@ class HolidaysEditPage extends StatefulWidget {
 
 class _HolidaysEditPageState extends State<HolidaysEditPage> {
   final _name = TextEditingController();
-  DateTime _date;
+  DateTime? _date;
   bool _active = true;
 
   @override
   void initState() {
     super.initState();
-    if (widget.holiday != null)
+    try {
+      final holiday = widget.holiday!;
       setState(() {
-        _name.text = widget.holiday.name;
-        _date = widget.holiday.date;
-        _active = widget.holiday.active;
+        _name.text = holiday.name;
+        _date = holiday.date;
+        _active = holiday.active;
       });
+    } catch (_) {}
   }
 
   @override
@@ -44,11 +46,9 @@ class _HolidaysEditPageState extends State<HolidaysEditPage> {
           ),
           TextField(
             readOnly: true,
-            controller: TextEditingController(
-                text: _date?.toString()?.substring(0, 10)),
-            decoration: InputDecoration(
-              labelText: 'Date'
-            ),
+            controller:
+                TextEditingController(text: _date?.toString().substring(0, 10)),
+            decoration: InputDecoration(labelText: 'Date'),
             onTap: () async {
               final date = await showDatePicker(
                 context: context,
@@ -62,7 +62,7 @@ class _HolidaysEditPageState extends State<HolidaysEditPage> {
           CheckboxListTile(
             title: Text("Active"),
             value: _active,
-            onChanged: (value) => setState(() => _active = value),
+            onChanged: (value) => setState(() => _active = value ?? _active),
           ),
 //          TextField(
 //            controller: active,
@@ -71,16 +71,16 @@ class _HolidaysEditPageState extends State<HolidaysEditPage> {
           MaterialButton(
             onPressed: () {
               if (widget.holiday != null) {
-                widget.holiday.name = _name.text;
-                widget.holiday.active = _active;
-                widget.holiday.date = _date;
+                widget.holiday!.name = _name.text;
+                widget.holiday!.active = _active;
+                widget.holiday!.date = _date!;
               } else {
                 Provider.of<HolidaysProvider>(context, listen: false)
                     .holidays
                     .add(
                       Holiday(
                         name: _name.text,
-                        date: _date,
+                        date: _date!,
                         active: _active,
                       ),
                     );

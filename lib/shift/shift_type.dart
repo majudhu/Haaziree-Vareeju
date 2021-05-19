@@ -8,14 +8,14 @@ class ShiftType {
   bool active;
 
   ShiftType({
-    this.shiftId,
-    this.name,
-    this.start,
-    this.duration,
+    required this.shiftId,
+    required this.name,
+    required this.start,
+    required this.duration,
     this.active = true,
   });
 }
 
 class ShiftTypeProvider with ChangeNotifier {
-  List<ShiftType> shifts = List<ShiftType>();
+  List<ShiftType> shifts = [];
 }

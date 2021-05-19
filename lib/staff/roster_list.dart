@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haazireevareeju/staff/create_roster_page.dart';
 import 'package:haazireevareeju/staff/staff.dart';
-import 'package:provider/provider.dart';
 
 class RosterListPage extends StatelessWidget {
   final List<Shift> shifts;
@@ -17,11 +16,11 @@ class RosterListPage extends StatelessWidget {
         itemBuilder: (context, index) => ListTile(
           title: Text(shifts[index].start.toString().substring(0, 16) +
               '(' +
-              (shifts[index].checkIn?.toString()?.substring(11, 16) ?? '') +
+              (shifts[index].checkIn?.toString().substring(11, 16) ?? '') +
               ')'),
           subtitle: Text(shifts[index].end.toString().substring(0, 16) +
               '(' +
-              (shifts[index].checkOut?.toString()?.substring(11, 16) ?? '') +
+              (shifts[index].checkOut?.toString().substring(11, 16) ?? '') +
               ')'),
           trailing: IconButton(
             icon: Icon(Icons.delete_forever),

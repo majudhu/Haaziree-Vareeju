@@ -7,13 +7,13 @@ class OffDayType {
   bool active;
 
   OffDayType({
-    this.typeId,
-    this.name,
-    this.paid,
+    required this.typeId,
+    required this.name,
+    required this.paid,
     this.active = true,
   });
 }
 
 class OffDayTypeProvider with ChangeNotifier {
-  List<OffDayType> offDayTypes = List<OffDayType>();
+  List<OffDayType> offDayTypes = [];
 }

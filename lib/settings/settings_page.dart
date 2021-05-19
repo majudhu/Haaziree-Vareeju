@@ -9,9 +9,9 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  TimeOfDay _checkInGrace;
+  late TimeOfDay _checkInGrace;
 
-  SettingsProvider _settings;
+  SettingsProvider? _settings;
 
   @override
   void initState() {
@@ -19,8 +19,8 @@ class _SettingsPageState extends State<SettingsPage> {
     _settings = Provider.of<SettingsProvider>(context, listen: false);
     setState(() {
       _checkInGrace = TimeOfDay(
-        hour: _settings?.checkInGrace?.inHours ?? 0,
-        minute: (_settings?.checkInGrace?.inMinutes ?? 0) % 60,
+        hour: _settings?.checkInGrace.inHours ?? 0,
+        minute: (_settings?.checkInGrace.inMinutes ?? 0) % 60,
       );
     });
   }
@@ -44,13 +44,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 context: context,
                 initialTime: _checkInGrace,
               );
-              setState(() => _checkInGrace = checkInGrace);
+              setState(() => _checkInGrace = checkInGrace ?? _checkInGrace);
             },
           ),
           MaterialButton(
             child: Text('Save'),
             onPressed: () async {
-              _settings.checkInGrace = Duration(
+              _settings?.checkInGrace = Duration(
                 hours: _checkInGrace.hour,
                 minutes: _checkInGrace.minute,
               );

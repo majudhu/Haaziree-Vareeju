@@ -6,12 +6,12 @@ class Holiday {
   bool active;
 
   Holiday({
-    this.date,
-    this.name,
+    required this.date,
+    required this.name,
     this.active = true,
   });
 }
 
 class HolidaysProvider with ChangeNotifier {
-  List<Holiday> holidays = List<Holiday>();
+  List<Holiday> holidays = [];
 }
